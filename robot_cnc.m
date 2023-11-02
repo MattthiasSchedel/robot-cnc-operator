@@ -1,7 +1,7 @@
 global global_info
 clc;
 global_info.CASE = 1;
-global_info.STOP_AT = 50;
+global_info.STOP_AT = 150;
 
 pns = pnstruct({'robot_cnc_pdf', 'PDF_IMC', 'failCheck_module_pdf', 'painting_module_pdf'});
 
@@ -14,7 +14,7 @@ pni = initialdynamics(pns, dynamic);
 
 sim = gpensim(pni);
 
-plotp(sim, {'pMagazine', 'pCNC1Raw', 'pCNC2Raw',  'pDeliveryBox','pCNC1Finished', 'pCNC2Finished', 'pPaintMagazine', 'pInPainting', 'pOutPainting', 'pDelivery', 'pAfterCheck','pFinal'})
+plotp(sim, {'pMagazine', 'pCNC1Raw', 'pCNC2Raw',  'pDeliveryBox','pCNC1Finished', 'pCNC2Finished', 'pPaintMagazine', 'pInPainting', 'pOutPainting', 'pDelivery', 'pAfterCheck', 'pFailedItems','pFinal'})
 prnss(sim)
 occupancy(sim, {'tMagazineToCNC1Raw', 'tMagazineToCNC2Raw', 'tCNC1RawToCNC1Finished', 'tCNC2RawToCNC2Finished', 'tCNC1FinishedToDeliveryBox', 'tCNC2FinishedToDeliveryBox', 'tPaint'})
 prncolormap(sim)

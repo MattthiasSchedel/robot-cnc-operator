@@ -3,7 +3,7 @@ function [fire, transition] = tCheckItem_pre (transition)
 tokId = tokenAny('pBeforeCheck', 1);
 
 x = rand;
-if x < 0.8
+if x > 0.8
     transition.new_color = 'error'
 else
     transition.new_color = 'passed'
