@@ -4,7 +4,7 @@ function [png] = warehouse_pdf()
 
     png.set_of_Ps = {'pMaterials', 'pWarehouse'}; 
 
-    png.set_of_Ts = {'tPopulateWarehouse'} ;
+    png.set_of_Ts = {'tPopulateWarehouse', 'tWarehouseOut'} ;
 
     png.set_of_As = {'pMaterials', 'tPopulateWarehouse', 1, ...
                     'tPopulateWarehouse', 'pWarehouse', 1, ...
