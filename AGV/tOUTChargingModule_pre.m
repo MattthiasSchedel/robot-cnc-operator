@@ -6,11 +6,13 @@ if tokID
 
     batteryStatus = colors{1};
     agvName = colors{2};
+    
 
-    transition.new_color = {batteryStatus, agvName};
+    transition.new_color = {agvName, colors{3}, batteryStatus,};
     transition.override = 1;
 
     fire = tokID;
+    disp("tOUTChargingModule_pre fired!");
 else
     fire = 0;
 end

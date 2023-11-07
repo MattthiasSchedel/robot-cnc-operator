@@ -3,7 +3,6 @@ clear all; clc;
 global global_info
 global_info.CASE = 1;
 global_info.STOP_AT = 150;
-global_info.agvIndex = 1;
 global_info.chargingIndex = 1;
 
 pns = pnstruct({'robot_cnc_pdf', 'PDF_IMC', 'failCheck_module_pdf', 'painting_module_pdf', 'bottomHalf_module_pdf', 'createPlasticGlass_module_pdf', 'createWheels_module_pdf', 'charging_module_pdf'});

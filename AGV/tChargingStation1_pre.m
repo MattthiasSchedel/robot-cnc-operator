@@ -2,18 +2,8 @@ function [fire, transition] = tChargingStation1_pre (transition)
 
 tokID = tokenAnyColor('pCurrentlyCharging',1, {'ChargingStation1'});
 if tokID
-   colors = get_color('pCurrentlyCharging', tokID);
-    
-   for i = 1:numel(colors)        
-        elementi = colors{i}
-        if not(isempty(str2num(elementi)))
-            chargingProcent = str2num(elementi)
-        elseif strcmp(elementi(1:3), 'AGV')
-            agvName = elementi
-        else
-            chargingStation = elementi
-        end
-    end
+    colors = get_color('pCurrentlyCharging', tokID);
+    chargingProcent = str2num(colors{1});
 
     %{
     chargingProcent = str2num(colors{1});
@@ -26,8 +16,7 @@ if tokID
     if chargingProcent >= 100
         chargingProcent = 100;
     end
-
-    transition.new_color = {num2str(chargingProcent), agvName, chargingStation};
+    transition.new_color = {num2str(chargingProcent), colors{2}, colors{3}, colors{4}};
     transition.override = 1;
     transition.selected_tokens = tokID;
 

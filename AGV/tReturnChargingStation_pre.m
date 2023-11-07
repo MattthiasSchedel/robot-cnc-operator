@@ -4,7 +4,7 @@ tokID = tokenAnyColor('pStationBecomeAvailabe',1, {'ChargingStation1' , 'Chargin
 if tokID
     colors = get_color('pStationBecomeAvailabe', tokID);
 
-    chargingStation = colors{3};
+    chargingStation = colors{4};
 
     transition.new_color = chargingStation;
     transition.override = 1;
