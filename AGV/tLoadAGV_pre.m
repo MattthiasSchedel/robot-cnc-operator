@@ -5,7 +5,6 @@ agvColors = get_color('pAGVIdle', agvId);
 materialId = tokenArrivedEarly('pAGVPickup',1);
 materialColors = get_color('pAGVPickup', materialId);
 distance = 0;
-
 switch materialColors{2} % where does the material come from
     case 'warehouse'
         switch materialColors{3} % Where does the material go to

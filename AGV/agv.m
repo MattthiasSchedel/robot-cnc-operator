@@ -24,7 +24,7 @@ pni = initialdynamics(pns, dynamic);
 sim = gpensim(pni);
 
 plotp(sim, {'pAfterMat', 'pCurrentlyCharging' ...
-        'pBeforeCharging', 'pAGVIdle', 'pAss', 'pFailedItems', 'pAfterCheck'})
+        'pBeforeCharging', 'pAGVIdle', 'pAss', 'pFailedItems', 'pProductionOut'})
 % prnss(sim)
 occupancy(sim, {'tChargingStation1', 'tChargingStation2','tChargingStation3', 'tChargingStation4','tChargingStation5'})
 plotGC(sim)
