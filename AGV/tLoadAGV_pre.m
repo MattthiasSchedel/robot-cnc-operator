@@ -19,7 +19,48 @@ switch materialColors{2} % where does the material come from
                 distance = 40;
             otherwise
                 fire = 0; return;
-
+        end
+    case 'createPlacticGlass'
+        switch materialColors{3} % Where does the material go to
+            case 'combiner'
+                distance = 14;
+            otherwise
+                fire = 0; return;
+        end
+    case 'createBottomHalf'
+        switch materialColors{3} % Where does the material go to
+            case 'combiner'
+                distance = 17;
+            otherwise
+                fire = 0; return;
+        end
+    case 'createTopHalf'
+        switch materialColors{3} % Where does the material go to
+            case 'combiner'
+                distance = 22;
+            otherwise
+                fire = 0; return;
+        end
+    case 'createWheels'
+        switch materialColors{3} % Where does the material go to
+            case 'combiner'
+                distance = 25;
+            otherwise
+                fire = 0; return;
+        end
+    case 'combiner'
+        switch materialColors{3} % Where does the material go to
+            case 'painter'
+                distance = 4;
+            otherwise
+                fire = 0; return;
+        end
+    case 'painter'
+        switch materialColors{3} % Where does the material go to
+            case 'failcheck'
+                distance = 5;
+            otherwise
+                fire = 0; return;
         end
     
     otherwise
