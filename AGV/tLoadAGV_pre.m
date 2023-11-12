@@ -1,73 +1,54 @@
-function [fire, transition] = tLoadAGV_pre (transition)
+function [fire, transition] = tLoadAGV_pre(transition)
+    % Pre function for tLoadAGV transition
 
-agvId = tokenAny('pAGVIdle',1);
-agvColors = get_color('pAGVIdle', agvId);
-materialId = tokenArrivedEarly('pAGVPickup',1);
-materialColors = get_color('pAGVPickup', materialId);
-distance = 0;
-switch materialColors{2} % where does the material come from
-    case 'warehouse'
-        switch materialColors{3} % Where does the material go to
-            case 'createPlacticGlass'
-                distance = 10; 
-            case 'createBottomHalf'
-                distance = 20;
-            case 'createTopHalf'
-                distance = 30;
-            case 'createWheels'
-                distance = 40;
-            otherwise
-                fire = 0; return;
-        end
-    case 'createPlacticGlass'
-        switch materialColors{3} % Where does the material go to
-            case 'combiner'
-                distance = 14;
-            otherwise
-                fire = 0; return;
-        end
-    case 'createBottomHalf'
-        switch materialColors{3} % Where does the material go to
-            case 'combiner'
-                distance = 17;
-            otherwise
-                fire = 0; return;
-        end
-    case 'createTopHalf'
-        switch materialColors{3} % Where does the material go to
-            case 'combiner'
-                distance = 22;
-            otherwise
-                fire = 0; return;
-        end
-    case 'createWheels'
-        switch materialColors{3} % Where does the material go to
-            case 'combiner'
-                distance = 25;
-            otherwise
-                fire = 0; return;
-        end
-    case 'combiner'
-        switch materialColors{3} % Where does the material go to
-            case 'painter'
-                distance = 4;
-            otherwise
-                fire = 0; return;
-        end
-    case 'painter'
-        switch materialColors{3} % Where does the material go to
-            case 'failcheck'
-                distance = 5;
-            otherwise
-                fire = 0; return;
-        end
-    
-    otherwise
-        fire = 0; return;
+    agvId = tokenAny('pAGVIdle', 1);
+    agvColors = get_color('pAGVIdle', agvId);
+    materialId = tokenArrivedEarly('pAGVPickup', 1);
+    materialColors = get_color('pAGVPickup', materialId);
+    distance = 0;
+
+    % Determine distance based on material source and destination
+    switch materialColors{2} % Source of the material
+        case 'warehouse'
+            distance = determineDistance(materialColors{3}, ...
+                {'createPlacticGlass', 'createBottomHalf', 'createTopHalf', 'createWheels'}, ...
+                [10, 20, 30, 40]);
+        case 'createPlacticGlass'
+            distance = determineDistance(materialColors{3}, {'combiner'}, [14]);
+        case 'createBottomHalf'
+            distance = determineDistance(materialColors{3}, {'combiner'}, [17]);
+        case 'createTopHalf'
+            distance = determineDistance(materialColors{3}, {'combiner'}, [22]);
+        case 'createWheels'
+            distance = determineDistance(materialColors{3}, {'combiner'}, [25]);
+        case 'combiner'
+            distance = determineDistance(materialColors{3}, {'painter'}, [4]);
+        case 'painter'
+            distance = determineDistance(materialColors{3}, {'failcheck'}, [5]);
+        otherwise
+            fire = 0;
+            return;
+    end
+
+    % Set the new color and token selection for the transition
+    startingTime = current_time();
+    transition.new_color = {
+        num2str(distance), agvColors{1}, agvColors{2}, agvColors{3}, ...
+        materialColors{1}, materialColors{3}, num2str(startingTime), num2str(0)
+    }; % distance, agv_name, agv_speed, agv battery, material type, material destination, starting_time, traveled distance
+    transition.override = 1;
+    transition.selected_tokens = [materialId, agvId];
+    fire = 1;
 end
-starting_time = current_time();
-transition.new_color = {num2str(distance) , agvColors{1}, agvColors{2}, agvColors{3},... % distance, agv_name, agv_speed, agv battery
-                        materialColors{1}, materialColors{3}, num2str(starting_time), num2str(0)}; % material type, material destination, starting_time, traveled distance
-transition.override = 1;
-transition.selected_tokens = [materialId, agvId];
-fire = 1;
+
+function distance = determineDistance(destination, destinations, distances)
+    % Helper function to determine distance based on destination
+    distance = 0;
+    index = find(strcmp(destinations, destination));
+    if ~isempty(index)
+        distance = distances(index);
+    else
+        fire = 0;
+        error('Invalid destination');
+    end
+end

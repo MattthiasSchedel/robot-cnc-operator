@@ -1,13 +1,14 @@
-function [fire, transition] = tWarehouseOut_pre (transition)
-    % Add a destination to the token so that the AGV knows where to go. 
+% FILEPATH: /Users/matthiasschedel/Documents/MATLAB/robot-cnc-operator/AGV/tWarehouseOut_pre.m
+function [fire, transition] = tWarehouseOut_pre(transition)
+    % Add a destination to the token so that the AGV knows where to go.
     % tokenId = tokenAny('pWarehouse',1);
-    tokenId = tokenArrivedEarly('pWarehouse',1);
-    colors = get_color('pWarehouse',tokenId);
+    tokenId = tokenArrivedEarly('pWarehouse', 1);
+    colors = get_color('pWarehouse', tokenId);
     material = colors{1};
     % display(tokenId);
     switch material
         case 'Plastic'
-            transition.new_color = {'Plastic','warehouse', 'createPlacticGlass'}; % type, location, destination
+            transition.new_color = {'Plastic', 'warehouse', 'createPlacticGlass'}; % type, location, destination
 
         case 'ToyCarMaterial'
             transition.new_color = {'ToyCarMaterial', 'warehouse', 'createBottomHalf'};
@@ -22,6 +23,7 @@ function [fire, transition] = tWarehouseOut_pre (transition)
             transition.new_color = colors;
             % fire = 0; return;
     end
-transition.override = 1;
-transition.selected_tokens = tokenId;
-fire = 1;
+    transition.override = 1;
+    transition.selected_tokens = tokenId;
+    fire = 1;
+end
