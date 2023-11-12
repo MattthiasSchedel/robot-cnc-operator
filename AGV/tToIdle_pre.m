@@ -1,7 +1,10 @@
-function [fire, transition] = tToIdle_pre (transition)
-    tokenId = tokenArrivedEarly('pUnloadedAGV',1);
+function [fire, transition] = tToIdle_pre(transition)
+    % Pre function for tToIdle transition
+
+    tokenId = tokenArrivedEarly('pUnloadedAGV', 1);
     colors = get_color('pUnloadedAGV', tokenId);
-    battery = str2num(colors{3});
+    battery = str2double(colors{3});
+
     if battery >= 20
         transition.new_color = {colors{1}, colors{2}, colors{3}};
         transition.override = 1;
@@ -10,3 +13,4 @@ function [fire, transition] = tToIdle_pre (transition)
     else
         fire = 0;
     end
+end
